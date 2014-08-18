@@ -87,7 +87,11 @@ class Invi
 	 */
 	public function pending($accountId)
 	{
-		return Invitation::where('account_id', '=', $accountId)->get()->toArray();
+		return Invitation::where('account_id', '=', $accountId)
+						->where('active', '=', 1)
+						->where('used', '=', 0)
+						->get()
+						->toArray();
 	}
 
 	public function status($code,$email)
