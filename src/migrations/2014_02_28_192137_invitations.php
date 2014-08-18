@@ -39,6 +39,7 @@ class Invitations extends Migration {
 				$table->string('email');
 				$table->date('expiration');
 				$table->boolean('active');
+				$table->integer('account_id');
 				$table->boolean('used')->default(False);
 				$table->timestamps();
 			});

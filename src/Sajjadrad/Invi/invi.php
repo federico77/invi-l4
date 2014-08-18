@@ -29,7 +29,7 @@ class Invi
 		$newClass = __CLASS__;
 		return new $newClass();
 	}
-	public function generate($email,$expire,$active)
+	public function generate($email,$expire,$active,$accountId = null)
 	{
 		if($this->checkEmail($email))
 		{
@@ -44,6 +44,10 @@ class Invi
 					"active"	=> $active,
 					"used"	=> "0"
 				);
+
+			if ($accountId)
+				$newInvi['account_id'] = $accountId;
+
 			Invitation::create($newInvi);
 			return json_encode($newInvi);
 		}
@@ -74,6 +78,18 @@ class Invi
 		Invitation::where('code','=',$code)->where('email','=',$email)
 				->update(array('used'=>False));
 	}
+
+	/**
+	 * Get all pending invites for given account ID
+	 * 
+	 * @param int
+	 * @return array
+	 */
+	public function pending($accountId)
+	{
+		return Invitation::where('account_id', '=', $accountId)->get()->toArray();
+	}
+
 	public function status($code,$email)
 	{
 		$temp = Invitation::where('code', '=', $code)->where('email','=',$email)
