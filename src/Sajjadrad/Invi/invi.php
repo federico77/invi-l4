@@ -126,6 +126,11 @@ class Invi
 		else
 			return False;
 	}
+	public function get($code)
+	{
+		return Invitation::where('code', '=', $code)->first();
+		
+	}
 	public function delete($code,$email)
 	{
 		$temp = Invitation::where('code', '=', $code)->where('email','=',$email)
