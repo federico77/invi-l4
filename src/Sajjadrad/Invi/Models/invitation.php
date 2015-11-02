@@ -21,9 +21,26 @@
  */
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Events\Dispatcher;
 
 class Invitation extends \Eloquent
 {
-	protected $table = 'invitations';
-	protected $fillable = array('code','email','expiration','active','used', 'account_id');
+    protected $table = 'invitations';
+    protected $fillable = array('code','email','expiration','active','used', 'account_id');
+        
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function($invitation)
+        {
+            $payload = array(
+                'invitation' => $invitation,
+                'account'    => $invitation->account,
+            );
+            Event::fire('invitation.created', array($payload));
+        });
+    }
+    
+    public function account() { return $this->belongsTo('User'); }
 }
