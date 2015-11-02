@@ -93,6 +93,21 @@ class Invi
 						->get()
 						->toArray();
 	}
+        
+        /**
+	 * Get all accepted invites for given account ID
+	 * 
+	 * @param int
+	 * @return array
+	 */
+	public function accepted($accountId)
+	{
+		return Invitation::where('account_id', '=', $accountId)
+						->where('active', '=', 1)
+						->where('used', '=', 1)
+						->get()
+						->toArray();
+	}
 
 	public function status($code,$email)
 	{
