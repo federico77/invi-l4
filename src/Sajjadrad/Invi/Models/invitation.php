@@ -38,7 +38,7 @@ class Invitation extends \Eloquent
                 'invitation' => $invitation,
                 'account'    => $invitation->account,
             );
-            Event::fire('invitation.created', array($payload));
+            \Event::fire('invitation.created', array($payload));
         });
     }
     
