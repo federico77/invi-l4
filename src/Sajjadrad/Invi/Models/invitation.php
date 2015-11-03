@@ -21,7 +21,7 @@
  */
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Events;
+use Illuminate\Events\Dispatcher;
 
 class Invitation extends \Eloquent
 {
