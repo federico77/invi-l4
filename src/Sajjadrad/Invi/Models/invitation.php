@@ -43,4 +43,5 @@ class Invitation extends \Eloquent
     }
     
     public function account() { return $this->belongsTo('User'); }
+    public function user() { return $this->belongsTo('User', 'email', 'email'); }
 }
