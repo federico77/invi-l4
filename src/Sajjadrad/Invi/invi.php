@@ -90,8 +90,7 @@ class Invi
 		return Invitation::where('account_id', '=', $accountId)
 						->where('active', '=', 1)
 						->where('used', '=', 0)
-						->get()
-						->toArray();
+						->get();
 	}
         
         /**
@@ -105,8 +104,7 @@ class Invi
 		return Invitation::where('account_id', '=', $accountId)
 						->where('active', '=', 1)
 						->where('used', '=', 1)
-						->get()
-						->toArray();
+						->get();
 	}
 
 	public function status($code,$email)
