@@ -42,6 +42,18 @@ class Invitation extends \Eloquent
         });
     }
     
+    public function getStatusAttribute() {
+        if(!$this->active) {
+            return "deactive";
+        } elseif ($this->used) {
+            return "used";
+        } elseif (strtotime("now") > strtotime($this->expiration))
+            return "expired";
+        else {
+            return "valid";
+        }
+    }
+    
     public function account() { return $this->belongsTo('User'); }
     public function user() { return $this->belongsTo('User', 'email', 'email'); }
 }
