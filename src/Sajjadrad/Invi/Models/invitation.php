@@ -66,7 +66,8 @@ class Invitation extends \Eloquent
      * @return string
      */
     public function getExpirationForHumansAttribute() {
-        return Carbon\Carbon::parse($this->expiration)->diffForHumans(Carbon\Carbon::now());
+        $expiration = Carbon::parse($this->expiration);
+        return Carbon::now()->modify($expiration)->diffForHumans();
     }
     
     public function account() { return $this->belongsTo('User'); }
