@@ -22,6 +22,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Events\Dispatcher;
+use Carbon\Carbon;
 
 class Invitation extends \Eloquent
 {
@@ -42,16 +43,30 @@ class Invitation extends \Eloquent
         });
     }
     
+    /**
+     * Returns the current model status without hitting the database again
+     * 
+     * @return string possible values [deactive|used|expired|valid]
+     */
     public function getStatusAttribute() {
         if(!$this->active) {
             return "deactive";
         } elseif ($this->used) {
             return "used";
-        } elseif (strtotime("now") > strtotime($this->expiration))
+        } elseif (strtotime("now") > strtotime($this->expiration)) {
             return "expired";
-        else {
+        } else {
             return "valid";
         }
+    }
+    
+    /**
+     * Returns a string built with Carbon using current locale since ver 1.18.0
+     * 
+     * @return string
+     */
+    public function getExpirationForHumansAttribute() {
+        return Carbon\Carbon::parse($this->expiration)->diffForHumans(Carbon\Carbon::now());
     }
     
     public function account() { return $this->belongsTo('User'); }
