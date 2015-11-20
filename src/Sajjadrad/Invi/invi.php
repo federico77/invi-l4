@@ -78,6 +78,14 @@ class Invi
 		Invitation::where('code','=',$code)->where('email','=',$email)
 				->update(array('used'=>False));
 	}
+        public function renew($code,$email,$expire)
+        {
+            $now = strtotime("now");
+            $format = 'Y-m-d H:i:s ';
+            $expiration = date($format, strtotime('+ '.$expire, $now)); 
+            Invitation::where('code','=',$code)->where('email','=',$email)
+                    ->update(array('expiration'=>$expiration));
+        }
 
 	/**
 	 * Get all pending invites for given account ID

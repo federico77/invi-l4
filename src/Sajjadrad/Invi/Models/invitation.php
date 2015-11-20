@@ -70,6 +70,17 @@ class Invitation extends \Eloquent
         return Carbon::now()->modify($expiration)->diffForHumans();
     }
     
+    /**
+     * Retrieves the user account model of the inviter
+     * 
+     * @return User 
+     */
     public function account() { return $this->belongsTo('User'); }
+    
+    /**
+     * Retrieves the user account of the invited user if available
+     * 
+     * @return User
+     */
     public function user() { return $this->belongsTo('User', 'email', 'email'); }
 }
